@@ -6,6 +6,8 @@
 #include "Player.hpp"
 #include "Camera.hpp"
 
+using namespace irr;
+
 class Application
 {
 public:
@@ -15,10 +17,10 @@ public:
     void run();
 
 private:
-    irr::IrrlichtDevice* device;
-    irr::video::IVideoDriver* driver;
-    irr::scene::ISceneManager* smgr;
-    irr::gui::IGUIEnvironment* guienv;
+    IrrlichtDevice* device;
+    video::IVideoDriver* driver;
+    scene::ISceneManager* smgr;
+    gui::IGUIEnvironment* guienv;
 
     MyEventReceiver receiver;
     Player* player;
