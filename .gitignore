@@ -1,0 +1,19 @@
+# macOS specific
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+
+# Xcode specific
+bin
+build/
+DerivedData/
+*.xcuserstate
+*.xcworkspace/
+*.xcuserdata/
+*.xcscheme
+*.xcmappingmodel
+
+# Irrlicht Src
+irrlicht-1.8.5
