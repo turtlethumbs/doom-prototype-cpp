@@ -12,11 +12,12 @@ class Camera
 public:
     Camera(ISceneManager* smgr, ISceneNode* playerNode);
     void addAnimator(scene::ISceneNodeAnimator* anim);
-    void update(ISceneNode* playerNode);
+    void update(ISceneNode* playerNode, f32 deltaTime);
 
 private:
     ICameraSceneNode* cameraNode;
     vector3df offset;
+    f32 smoothingFactor;
 };
 
 #endif

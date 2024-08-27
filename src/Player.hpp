@@ -18,12 +18,17 @@ public:
     void update(const MyEventReceiver& receiver, f32 deltaTime);
 
 private:
-    ISceneNode* playerNode;
-    const f32 movementSpeed = 20.f;
-    const f32 rotationSpeed = 45.f;
-    scene::SMesh* CylinderMesh;
-    
     void createCylinder(f32 radius, f32 height, u32 segments);
+    void moveForward(f32 deltaTime);
+    void moveBackward(f32 deltaTime);
+    void strafeLeft(f32 deltaTime);
+    void strafeRight(f32 deltaTime);
+
+    ISceneNode* playerNode;
+    scene::SMesh* CylinderMesh;
+    f32 movementSpeed = 10.0f; // Adjust as needed
+    f32 strafeSpeed = 10.0f;   // Adjust as needed
+    f32 rotationSpeed = 60.0f; // Degrees per second
 };
 
 #endif // PLAYER_H

@@ -5,7 +5,7 @@ Player::Player(ISceneManager* smgr, IVideoDriver* driver)
     createCylinder(0.75f, 1.82f, 16);
     playerNode = smgr->addMeshSceneNode(CylinderMesh);
     CylinderMesh->drop(); // Drop the mesh as it's now managed by the scene node
-    
+
     if (playerNode)
     {
         playerNode->setPosition(core::vector3df(25, 0, 25));
@@ -26,34 +26,41 @@ ISceneNode* Player::getNode() const
 
 void Player::update(const MyEventReceiver& receiver, f32 deltaTime)
 {
-    // Rotate player based on input
-    if (receiver.IsKeyDown(irr::KEY_KEY_A)) {
-        playerNode->setRotation(playerNode->getRotation() + core::vector3df(0, -rotationSpeed * deltaTime, 0));
-    }
-    if (receiver.IsKeyDown(irr::KEY_KEY_D)) {
-        playerNode->setRotation(playerNode->getRotation() + core::vector3df(0, rotationSpeed * deltaTime, 0));
-    }
-
-    // Calculate the forward direction the player is facing
-    core::vector3df forwardDir = core::vector3df(0, 0, 1);
+    core::vector3df forwardDir(0, 0, 1);
+    core::vector3df rightDir(1, 0, 0);
     core::matrix4 rotationMatrix;
     rotationMatrix.setRotationDegrees(playerNode->getRotation());
-    rotationMatrix.transformVect(forwardDir);
 
-    // Player will move 2x faster while holding the shift key
-    int speedModifier = (receiver.IsKeyDown(irr::KEY_SHIFT)) ? 2.0f: 1.0f;;
-    
-    // Update the player's position based on input
-    core::vector3df nodePosition = playerNode->getPosition();
+    rotationMatrix.transformVect(forwardDir);
+    rotationMatrix.transformVect(rightDir);
+    forwardDir.normalize();
+    rightDir.normalize(); // Ensure rightDir is normalized for consistent strafing
+
+    int speedModifier = receiver.IsKeyDown(irr::KEY_SHIFT) ? 2 : 1;
+
+    // Update player rotation
+    if (receiver.IsKeyDown(irr::KEY_KEY_A))
+        playerNode->setRotation(playerNode->getRotation() + core::vector3df(0, -rotationSpeed * deltaTime, 0));
+    if (receiver.IsKeyDown(irr::KEY_KEY_D))
+        playerNode->setRotation(playerNode->getRotation() + core::vector3df(0, rotationSpeed * deltaTime, 0));
+
+    // Calculate movement directions
+    core::vector3df movement(0, 0, 0);
     if (receiver.IsKeyDown(irr::KEY_KEY_W))
-        nodePosition += forwardDir * movementSpeed * speedModifier * deltaTime;
-    else if (receiver.IsKeyDown(irr::KEY_KEY_S))
-        nodePosition -= forwardDir * movementSpeed * speedModifier * deltaTime;
-    
-    playerNode->setPosition(nodePosition);
+        movement += forwardDir * movementSpeed * speedModifier * deltaTime;
+    if (receiver.IsKeyDown(irr::KEY_KEY_S))
+        movement -= forwardDir * movementSpeed * speedModifier * deltaTime;
+    if (receiver.IsKeyDown(irr::KEY_KEY_Q))
+        movement -= rightDir * movementSpeed * speedModifier * deltaTime;  // Strafe left
+    if (receiver.IsKeyDown(irr::KEY_KEY_E))
+        movement += rightDir * movementSpeed * speedModifier * deltaTime;  // Strafe right
+
+    core::vector3df newPosition = playerNode->getPosition() + movement;
+    playerNode->setPosition(newPosition);
 }
 
-void Player::createCylinder(f32 radius, f32 height, u32 segments) {
+void Player::createCylinder(f32 radius, f32 height, u32 segments)
+{
     CylinderMesh = new scene::SMesh();
     scene::SMeshBuffer* buffer = new scene::SMeshBuffer();
 
@@ -79,7 +86,6 @@ void Player::createCylinder(f32 radius, f32 height, u32 segments) {
         buffer->Vertices[i + segments + 2] = video::S3DVertex(vector3df(x, -height / 2, z), vector3df(0, -1, 0), video::SColor(255, 255, 255, 255), vector2df(0, 1));
     }
 
-    // Create indices for top and bottom faces
     u32 index = 0;
     for (u32 i = 0; i < segments; ++i) {
         u32 next = (i + 1) % segments;
@@ -103,9 +109,9 @@ void Player::createCylinder(f32 radius, f32 height, u32 segments) {
 
     // Set material properties directly on the mesh buffer
     video::SMaterial material;
-    material.Lighting = false; // Disable lighting
-    material.FogEnable = false; // Disable fog
-    material.BackfaceCulling = false; // Disable back face culling
+    material.Lighting = false;
+    material.FogEnable = false;
+    material.BackfaceCulling = false;
     buffer->Material = material;
 
     // Add the buffer to the mesh

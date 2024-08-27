@@ -41,7 +41,7 @@ void Application::run()
         }
 
         player->update(receiver, frameDeltaTime);
-        camera->update(player->getNode());
+        camera->update(player->getNode(), frameDeltaTime);
 
         driver->beginScene(true, true, irr::video::SColor(255, 100, 101, 140));
         smgr->drawAll();
