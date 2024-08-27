@@ -11,7 +11,6 @@ class Camera
 {
 public:
     Camera(ISceneManager* smgr, ISceneNode* playerNode);
-    void addAnimator(scene::ISceneNodeAnimator* anim);
     void update(ISceneNode* playerNode, f32 deltaTime);
 
 private:
