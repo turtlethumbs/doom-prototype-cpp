@@ -9,7 +9,8 @@ Application::~Application()
 
 bool Application::initialize()
 {
-    bool isFullScreen, isVsyncEnabled = true;
+    bool isFullScreen = true;
+    bool isVsyncEnabled = true;
     bool useStencilBuffer = false;
 
     device = irr::createDevice(irr::video::EDT_OPENGL, irr::core::dimension2d<irr::u32>(1280, 800), 16, isFullScreen, useStencilBuffer, isVsyncEnabled, &receiver);
