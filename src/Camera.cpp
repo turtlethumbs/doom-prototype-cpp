@@ -6,7 +6,6 @@ Camera::Camera(ISceneManager* smgr, ISceneNode* playerNode) : smoothingFactor(0.
     cameraNode = smgr->addCameraSceneNode();
     cameraNode->setParent(playerNode);
     cameraNode->bindTargetAndRotation(true);
-    cameraNode->setInputReceiverEnabled(false);
     cameraNode->setNearValue(0.1f);
 }
 
