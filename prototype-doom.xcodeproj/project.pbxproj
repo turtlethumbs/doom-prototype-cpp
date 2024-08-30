@@ -16,6 +16,8 @@
 		C2A3655F2C7D45E3009BE85C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C25DD3182C74ED61009E697C /* IOKit.framework */; };
 		C2A365602C7D462A009BE85C /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C25DD3162C74ED53009E697C /* OpenGL.framework */; platformFilters = (macos, ); };
 		C2A365632C7D46AE009BE85C /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2A365612C7D46AE009BE85C /* Application.cpp */; };
+		C2B6A5652C81EF6000B596A3 /* CylinderCreator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2B6A5632C81EF5F00B596A3 /* CylinderCreator.cpp */; };
+		C2B6A5662C81EF6000B596A3 /* Enemy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2B6A5642C81EF6000B596A3 /* Enemy.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +37,10 @@
 		C29B4B592C75015B006167FF /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		C2A365612C7D46AE009BE85C /* Application.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Application.cpp; sourceTree = "<group>"; };
 		C2A365622C7D46AE009BE85C /* Application.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Application.hpp; sourceTree = "<group>"; };
+		C2B6A5612C81EF5F00B596A3 /* Enemy.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Enemy.hpp; sourceTree = "<group>"; };
+		C2B6A5622C81EF5F00B596A3 /* CylinderCreator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CylinderCreator.hpp; sourceTree = "<group>"; };
+		C2B6A5632C81EF5F00B596A3 /* CylinderCreator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CylinderCreator.cpp; sourceTree = "<group>"; };
+		C2B6A5642C81EF6000B596A3 /* Enemy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Enemy.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +91,10 @@
 		C29B4B582C75015B006167FF /* src */ = {
 			isa = PBXGroup;
 			children = (
+				C2B6A5632C81EF5F00B596A3 /* CylinderCreator.cpp */,
+				C2B6A5622C81EF5F00B596A3 /* CylinderCreator.hpp */,
+				C2B6A5642C81EF6000B596A3 /* Enemy.cpp */,
+				C2B6A5612C81EF5F00B596A3 /* Enemy.hpp */,
 				C29B4B592C75015B006167FF /* main.cpp */,
 				C227631B2C762EB40046A1A1 /* MyEventReceiver.cpp */,
 				C227631C2C762EB40046A1A1 /* MyEventReceiver.hpp */,
@@ -168,6 +178,8 @@
 			files = (
 				C29446AB2C78C30D006B060C /* Camera.cpp in Sources */,
 				C29446A82C78C2D9006B060C /* Player.cpp in Sources */,
+				C2B6A5662C81EF6000B596A3 /* Enemy.cpp in Sources */,
+				C2B6A5652C81EF6000B596A3 /* CylinderCreator.cpp in Sources */,
 				C2A365632C7D46AE009BE85C /* Application.cpp in Sources */,
 				C29B4B5A2C75015B006167FF /* main.cpp in Sources */,
 				C227631D2C762EB40046A1A1 /* MyEventReceiver.cpp in Sources */,
