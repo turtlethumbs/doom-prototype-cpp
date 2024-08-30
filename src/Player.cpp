@@ -1,7 +1,8 @@
 #include "Player.hpp"
 #include "CylinderCreator.hpp"
+#include <iostream>
 
-Player::Player(ISceneManager* smgr, IVideoDriver* driver)
+Player::Player(ISceneManager* sceneManager, IVideoDriver* driver): smgr(sceneManager)
 {
     scene::IMesh* CylinderMesh = CylinderCreator::createCylinder(0.75f, 1.82f, 16, driver);
     playerNode = smgr->addMeshSceneNode(CylinderMesh);
@@ -13,16 +14,6 @@ Player::Player(ISceneManager* smgr, IVideoDriver* driver)
         playerNode->setMaterialTexture(0, driver->getTexture("../../media/wall.bmp"));
         playerNode->setMaterialFlag(video::EMF_LIGHTING, false);
     }
-}
-
-void Player::addAnimator(scene::ISceneNodeAnimator* anim)
-{
-    playerNode->addAnimator(anim);
-}
-
-ISceneNode* Player::getNode() const
-{
-    return playerNode;
 }
 
 void Player::update(const MyEventReceiver& receiver, f32 deltaTime)
@@ -58,4 +49,54 @@ void Player::update(const MyEventReceiver& receiver, f32 deltaTime)
 
     core::vector3df newPosition = playerNode->getPosition() + movement;
     playerNode->setPosition(newPosition);
+    
+    // Check for left mouse button press
+    if (receiver.IsMouseButtonJustPressed(0)) // 0 is the index for the left mouse button
+    {
+        shootRaycast();
+    }
+}
+
+void Player::addAnimator(scene::ISceneNodeAnimator* anim)
+{
+    playerNode->addAnimator(anim);
+}
+
+ISceneNode* Player::getNode() const
+{
+    return playerNode;
+}
+
+void Player::shootRaycast()
+{
+    if (!playerNode) return;
+
+    // Get the player's current position and forward direction
+    core::vector3df playerPosition = playerNode->getPosition();
+    core::vector3df forwardDirection(0, 0, 1); // Forward direction (along Z axis)
+    
+    // Rotate the forwardDirection vector according to the player's current rotation
+    core::matrix4 rotationMatrix;
+    rotationMatrix.setRotationDegrees(playerNode->getRotation());
+    rotationMatrix.transformVect(forwardDirection);
+    
+    // Normalize the forward direction
+    forwardDirection.normalize();
+    
+    // Define a ray starting from the player's position and extending in the forward direction
+    line3d<f32> ray(playerPosition, playerPosition + (forwardDirection * 10000.0f)); // Adjust length as needed
+
+    // Perform raycasting using the scene collision manager
+    ISceneCollisionManager* collMan = smgr->getSceneCollisionManager();
+    ISceneNode* selectedSceneNode = collMan->getSceneNodeFromRayBB(ray);
+    
+    if (selectedSceneNode)
+    {
+        // Output the MeshNode ID to the debug log if an enemy is hit
+        std::cout << "Ray hit a node! Node ID: " << selectedSceneNode->getID() << std::endl;
+    }
+    else
+    {
+        std::cout << "Ray did not hit any node." << std::endl;
+    }
 }
